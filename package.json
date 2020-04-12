@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "jest": "^25.3.0",
+    "lerna": "^3.20.2"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "name": "front",
+  "dependencies": {
+    "mobx": "^5.15.4"
+  }
+}
