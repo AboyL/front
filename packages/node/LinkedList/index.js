@@ -58,15 +58,31 @@ class LinkedList {
     }
     return currnet
   }
+  // 进行反转
+  reverse () {
+    const _reverse = (head) => {
+      if (head === null || head.next === null) {
+        return head
+      }
+      let newHead = _reverse(head.next)
+      head.next.next = head
+      head.next = null
+      return newHead
+    }
+    this.head = _reverse(this.head)
+    return this.head
+  }
 }
 
 const link = new LinkedList()
 link.add(1)
 link.add(2)
 link.add(3)
-link.add(1, 100)
-console.log(link.remove(1))
+
 console.log(link)
+link.reverse()
+console.log(link)
+
 // {element,next:{element,next:null}}
 
 module.exports = LinkedList
