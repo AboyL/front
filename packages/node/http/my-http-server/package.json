@@ -1,0 +1,13 @@
+{
+  "name": "my-http-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "bin": {
+    "my-http-server": "./bin/www"
+  },
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "commander": "^7.0.0"
+  }
+}

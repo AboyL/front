@@ -1,0 +1,33 @@
+#! /usr/bin/env node
+
+const program = require('commander')
+const defaultConfig = require('./config')
+const chalk = require('chalk')
+const usageList = []
+const Server = require('../src/server')
+
+program.name('my-http-server'); // 配置使用的名字
+// 处理参数
+Object.entries(defaultConfig).forEach(([_key, value]) => {
+  usageList.push(value.usage)
+  // 可以直接使用default参数进行处理
+  program.option(value.option, value.descriptor, value.default)
+})
+program.parse(process.argv)
+
+// const config={
+//   ...defaultConfig.map()
+// }
+program.on('--help', () => {
+  console.log('Examples:')
+  usageList.forEach(v => {
+    console.log(`  ${chalk.green(v)}`)
+  })
+})
+
+
+// 在 7.x 以后进行了优化 不再直接挂在program上了
+console.log(program.opts())
+
+const options = program.opts()
+new Server(options).start()
