@@ -1,6 +1,22 @@
 
 import React, { useState, useEffect } from 'react';
 import store from "../store";
+// import { bindActionCreators } from 'redux'
+import { bindActionCreators } from '../../redux'
+
+const actions = {
+  add () {
+    return {
+      type: 'add'
+    }
+  },
+  reduce () {
+    return {
+      type: 'reduce'
+    }
+  }
+}
+const bindAction = bindActionCreators(actions, store.dispatch)
 
 export default () => {
   const [test, setTest] = useState(store.getState().test)
@@ -11,8 +27,8 @@ export default () => {
   }, [])
   return (
     <div>
-      <button onClick={() => store.dispatch({ type: 'add' })} >add</button>
-      <button onClick={() => store.dispatch({ type: 'reduce' })} >reduce</button>
+      <button onClick={bindAction.add} >add</button>
+      <button onClick={bindAction.reduce} >reduce</button>
       <div>test{test}</div>
     </div>
   )

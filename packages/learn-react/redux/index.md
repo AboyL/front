@@ -10,3 +10,5 @@
 
 ### 步骤
 1. createStore
+2. bindActionCreators
+3. combineReducers
