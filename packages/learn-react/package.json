@@ -27,6 +27,7 @@
         "url": "https://github.com/AboyL/front/issues"
     },
     "dependencies": {
+        "react-redux": "^7.2.5",
         "redux": "^4.1.1",
         "umi": "^3.5.17",
         "webpack": "^5.52.0",

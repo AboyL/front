@@ -1,21 +1,35 @@
 
 import React, { useState, useEffect } from 'react';
-import store from "../store";
-import action from '../store/actions/counter1'
-import { bindActionCreators } from '../../redux'
-const bindAction = bindActionCreators(action, store.dispatch)
-export default () => {
-  const [test, setTest] = useState(store.getState().counter1.number)
-  useEffect(() => {
-    store.subscribe(() => {
-      setTest(store.getState().counter1.number)
-    })
-  }, [])
+import * as actionTypes from '../store/action-types';
+import { connect } from '../../react-redux'
+
+const Counter1 = ({
+  test,
+  add1,
+  minus1
+}) => {
   return (
     <div>
-      <button onClick={bindAction.add1} >add</button>
-      <button onClick={bindAction.minus1} >minus</button>
+      <button onClick={add1} >add</button>
+      <button onClick={minus1} >minus</button>
       <div>counter1 test{test}</div>
     </div>
   )
 }
+const mapStateToProps = state => ({
+  test: state.counter1.number,
+})
+
+const mapDispatchToProps = dispath => ({
+  add1 () {
+    dispath({ type: actionTypes.ADD1 });
+  },
+  minus1 () {
+    dispath({ type: actionTypes.MINUS1 });
+  },
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Counter1)

@@ -2,6 +2,7 @@
 1. 为什么要用redux
 2. redux不需要依赖react
 3. 如何跟react结合
+4. mapDispatchToProps
 
 #### redux的基本使用
 
@@ -12,3 +13,4 @@
 1. createStore
 2. bindActionCreators
 3. combineReducers
+4. react-redux 
