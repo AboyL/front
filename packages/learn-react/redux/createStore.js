@@ -1,4 +1,12 @@
-const createStore = (reducer, preloadedState) => {
+const createStore = (
+  reducer,
+  preloadedState,
+  enhancer
+) => {
+  if (typeof enhancer === 'function') {
+    return enhancer(createStore)(reducer, preloadedState)
+  }
+
   let state = preloadedState
   const listeners = []
   const getState = () => {

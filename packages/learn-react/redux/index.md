@@ -3,6 +3,7 @@
 2. redux不需要依赖react
 3. 如何跟react结合
 4. mapDispatchToProps
+5. 中间件
 
 #### redux的基本使用
 

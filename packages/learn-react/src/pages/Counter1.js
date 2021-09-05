@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import * as actionTypes from '../store/action-types';
 import { connect } from '../../react-redux'
 
