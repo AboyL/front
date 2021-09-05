@@ -1,10 +1,16 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import actions from '../store/actions/counter1'
-import { useSelector, useDispatch } from 'react-redux'
-import store from '../store';
+import { useSelector, useDispatch } from '../../react-redux'
+
+
 const Counter1Hooks = () => {
-  const test = useSelector(state => state.counter1.number)
+  const test = useSelector(state => state.counter1.number,(a,b)=>{
+    if(a===2){
+      return true
+    }
+    return false
+  })
   const dispatch = useDispatch()
 
   return (
