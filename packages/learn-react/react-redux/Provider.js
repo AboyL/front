@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import ReactReduxContext from "./reactReduxContext"
 const Provider = (props) => {
   const { store, children } = props

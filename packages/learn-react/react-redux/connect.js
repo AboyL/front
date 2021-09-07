@@ -1,4 +1,4 @@
-import { useState, useContext, useLayoutEffect } from 'react';
+import React, { useState, useContext, useLayoutEffect } from 'react';
 import { bindActionCreators } from '../redux';
 import ReactReduxContext from "./reactReduxContext";
 
@@ -13,7 +13,7 @@ const connect = (mapStateToProps, mapDispatchToProps) => {
       if (typeof mapDispatchToProps === 'function') {
         dispaths = mapDispatchToProps(store.dispatch)
       } else if (typeof mapDispatchToProps === 'object') {
-        dispaths = bindActionCreators(mapDispatchToProps,store.dispatch)
+        dispaths = bindActionCreators(mapDispatchToProps, store.dispatch)
       } else {
         throw Error('mapDispatchToProps must is a function or a Object')
       }

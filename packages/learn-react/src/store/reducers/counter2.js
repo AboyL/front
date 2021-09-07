@@ -8,8 +8,6 @@ function counter2(state=intialState,action){
             return {...state,number:state.number+1};
         case actionTypes.MINUS2:
             return {...state,number:state.number-1};
-        case actionTypes.CHANGE_COLOR:
-            return {...state,color:action.payload};   
         default:
             return state;    
     }
