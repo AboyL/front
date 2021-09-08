@@ -7,23 +7,30 @@ module.exports = {
     devtool: false,
     entry: './src/index.js',
     output: {
-        publicPath: "http://localhost:8000/",
+        publicPath: "http://localhost:8888/",
     },
     devServer: {
         compress: true, //启动压缩 gzip
-        port: 8000,
+        port: 8888,
         historyApiFallback: true,
+    },
+    resolve:{
+        alias:{
+            'redux': getPath('redux'),
+            'connected-react-router': getPath('connected-react-router'),
+            'react-redux': getPath('react-redux'),
+        }
     },
     module: {
         rules: [{
             test: /\.(jsx|js)?$/,
             exclude: /node_modules/,
-            include: [
-                getPath('src'),
-                getPath('connected-react-router'),
-                getPath('react-redux'),
-                getPath('redux')
-            ],
+            // include: [
+            //     getPath('src'),
+            //     getPath('connected-react-router'),
+            //     getPath('react-redux'),
+            //     getPath('redux')
+            // ],
             use: {
                 loader: 'babel-loader',
                 options: {

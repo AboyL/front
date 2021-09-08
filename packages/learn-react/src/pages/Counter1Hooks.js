@@ -1,7 +1,7 @@
 
 import React from 'react';
 import actions from '../store/actions/counter1'
-import { useSelector, useDispatch } from '../../react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 
 const Counter1Hooks = () => {

@@ -7,9 +7,9 @@ import Counter2 from './Counter2';
 import Counter1Hooks from './Counter1Hooks';
 import Change from './Change';
 
-import { Provider } from '../../react-redux'
+import { Provider } from 'react-redux'
 import store from "../store";
-import { ConnectedRouter } from '../../connected-react-router'
+import { ConnectedRouter } from 'connected-react-router'
 import { history } from '../store/history';
 
 export default () => {

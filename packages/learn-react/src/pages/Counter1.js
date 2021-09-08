@@ -1,7 +1,7 @@
 
 import React from 'react';
 import * as actionTypes from '../store/action-types';
-import { connect } from '../../react-redux'
+import { connect } from 'react-redux'
 
 const Counter1 = ({
   test,

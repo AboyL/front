@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import action from '../store/actions/counter2'
-import { connect } from '../../react-redux'
+import { connect } from 'react-redux'
 
 const Counter2 = ({
   test,

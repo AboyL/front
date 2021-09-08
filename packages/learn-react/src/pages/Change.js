@@ -1,7 +1,7 @@
 import React from 'react';
-import { useDispatch } from "../../react-redux"
+import { useDispatch } from "react-redux"
 import { Link } from 'react-router-dom';
-import { push } from '../../connected-react-router'
+import { push } from 'connected-react-router'
 
 export default () => {
   const dispatch = useDispatch()

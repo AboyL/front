@@ -1,6 +1,6 @@
 // import { createStore } from 'redux'
-import { createStore, applyMiddleware } from '../../redux'
-import { routerMiddleware } from '../../connected-react-router';
+import { createStore, applyMiddleware } from 'redux'
+import { routerMiddleware } from 'connected-react-router';
 
 import reducer from './reducers'
 import logger from './middlewares/logger'
