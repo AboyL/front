@@ -1,4 +1,4 @@
-import { call, put, takeEvery,take, takeLatest } from 'redux-saga/effects'
+import { call, put, takeEvery, take, takeLatest, select } from 'redux-saga/effects'
 import *  as actionTypes from './action-types';
 
 const mockTime = () => {
@@ -11,6 +11,8 @@ const mockTime = () => {
 function* mock (action) {
   console.log('mock', action);
   try {
+    const state = yield select(state => state.counter1.number)
+    console.log('state----', state);
     // const number = yield call(mockTime);
     const number = 5
     yield put({ type: actionTypes.multiplication1, playload: { number } });
@@ -19,11 +21,16 @@ function* mock (action) {
   }
 }
 
-function* rootSoga () {
+function* watchSaga () {
   // take是会阻塞的，并且只会执行一次
   yield take("setTimeChange", mock);
   // yield take("setTimeChange");
   // yield takeEvery("setTimeChange", mock);
+}
+function* rootSoga () {
+  // yield watchSaga()
+  console.log('xxx');
+  yield take("setTimeChange", mock);
   console.log('xxxx');
 }
 

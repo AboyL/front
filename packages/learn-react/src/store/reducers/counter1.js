@@ -3,7 +3,6 @@ import * as actionTypes from '../action-types'
 let intialState = { number: 0, color: 'black' };
 //Counter1组件对应的reducer
 function counter1 (state = intialState, action) {
-    console.log('action',action);
     switch (action.type) {
         case actionTypes.ADD1:
             if (action.error) {

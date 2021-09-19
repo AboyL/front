@@ -6,25 +6,37 @@ import *  as effectTypes from './effectTypes';
 // 1 如果是take就进行监听并且阻塞
 // 2 如果是put不阻塞并且发送请求
 function runSaga (env, saga, completeCallback) {
-    const { dispatch,channel } = env
-    const it = saga()
+    const { dispatch, channel, getState } = env
+    const it = typeof saga === 'function' ? saga() : saga
+    // 根据是否是saga来进行处理
     function next (value) {
-        const { done, value: effect } = it.next()
+        const { done, value: effect } = it.next(value)
         if (!done) {
-            switch (effect.type) {
-                case effectTypes.TAKE:
-                    channel.once(effect.actionType,effect.listern?()=>{
-                        runSaga(env,effect.listern)
+            if (typeof effect[Symbol.iterator] === 'function') {
+                runSaga(env, effect);
+                //不会阻止当前saga继续向后走
+                next();
+            } else {
+                switch (effect.type) {
+                    case effectTypes.TAKE:
+                        // 好像源码里面不是这样实现的来着 take只是暂停
+                        channel.once(effect.actionType, effect.listern ? () => {
+                            runSaga(env, effect.listern.bind(null, effect.actionType))
+                            next()
+                        } : next)
+                        break;
+                    case effectTypes.PUT:
+                        dispatch(effect.action)
                         next()
-                    }:next)
-                    break;
-                case effectTypes.PUT:
-                    dispatch(effect.action)
-                    next()
-                    break;
-                default:
-                    next()
-                    break;
+                        break;
+                    case effectTypes.SELECT:
+                        const state = effect.selector(getState())
+                        next(state)
+                        break;
+                    default:
+                        next()
+                        break;
+                }
             }
         }
     }

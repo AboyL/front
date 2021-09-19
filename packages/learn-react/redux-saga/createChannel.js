@@ -11,6 +11,7 @@ function createChannel () {
         listeners.forEach(listener => {
             if (listener.type === action.type) {
                 listener.cancel();
+                console.log('action',action);
                 listener(action);
             }
         });

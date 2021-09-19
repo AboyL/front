@@ -11,7 +11,11 @@ import  createSagaMiddleware from 'redux-saga';
 import rootSoga from './rootSoga'
 
 const sagaMiddleware = createSagaMiddleware()
-const middleware = [logger, logger2, thunk, routerMiddleware(history),sagaMiddleware]
+const middleware = [
+  // logger, logger2, 
+  thunk, routerMiddleware(history),
+  sagaMiddleware
+]
 // 两种方式
 const store = createStore(reducer, undefined, applyMiddleware(...middleware))
 // const store = applyMiddleware(...middleware)(createStore)(reducer)
