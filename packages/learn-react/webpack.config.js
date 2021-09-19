@@ -16,9 +16,10 @@ module.exports = {
     },
     resolve:{
         alias:{
-            'redux': getPath('redux'),
-            'connected-react-router': getPath('connected-react-router'),
-            'react-redux': getPath('react-redux'),
+            // 'redux': getPath('redux'),
+            // 'connected-react-router': getPath('connected-react-router'),
+            // 'react-redux': getPath('react-redux'),
+            // 'redux-saga': getPath('redux-saga'),
         }
     },
     module: {
@@ -34,6 +35,9 @@ module.exports = {
             use: {
                 loader: 'babel-loader',
                 options: {
+                    plugins:[
+                        '@babel/plugin-transform-runtime'
+                    ],
                     presets: [
                         [
                             "@babel/preset-env",

@@ -1,19 +1,22 @@
 import * as actionTypes from '../action-types'
 //Counter1组件对应的state
-let intialState = {number:0,color:'black'};
+let intialState = { number: 0, color: 'black' };
 //Counter1组件对应的reducer
-function counter1(state=intialState,action){
-    switch(action.type){
+function counter1 (state = intialState, action) {
+    console.log('action',action);
+    switch (action.type) {
         case actionTypes.ADD1:
-            if(action.error){
-                return {...state,number:state.number-1};
-            }else{
-                return {...state,number:state.number+1};
+            if (action.error) {
+                return { ...state, number: state.number - 1 };
+            } else {
+                return { ...state, number: state.number + 1 };
             }
         case actionTypes.MINUS1:
-            return {...state,number:state.number-1}; 
+            return { ...state, number: state.number - 1 };
+        case actionTypes.multiplication1:
+            return { ...state, number: state.number * action.playload.number };
         default:
-            return state;    
+            return state;
     }
 }
 export default counter1

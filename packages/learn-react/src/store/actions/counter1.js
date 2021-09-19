@@ -7,6 +7,9 @@ let actions = {
     minus1 () {
         return { type: actionTypes.MINUS1 };
     },
+    multiplication1 () {
+        return { type: actionTypes.multiplication1 };
+    },
     delayAdd () {
         return (dispatch) => {
             setTimeout(() => {

@@ -17,6 +17,7 @@ const Counter1Hooks = () => {
     <div>
       <button onClick={()=>dispatch(actions.add1())} >add</button>
       <button onClick={()=>dispatch(actions.minus1())} >minus</button>
+      <button onClick={()=>dispatch({type:'setTimeChange'})} >multiplication1</button>
       <button onClick={()=>dispatch(actions.delayAdd())} >delayAdd</button>
       <div>Counter1Hooks test{test}</div>
     </div>
