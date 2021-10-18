@@ -8,7 +8,7 @@
     },
     "name": "front",
     "dependencies": {
-        "axios": "^0.19.2",
+        "axios": "^0.21.2",
         "koa": "^2.13.0",
         "react-scripts": "^4.0.3",
         "mobx": "^5.15.4"
