@@ -19,7 +19,7 @@ module.exports = {
             // 'redux': getPath('redux'),
             // 'connected-react-router': getPath('connected-react-router'),
             // 'react-redux': getPath('react-redux'),
-            // 'redux-saga': getPath('redux-saga'),
+            'redux-saga': getPath('redux-saga'),
         }
     },
     module: {

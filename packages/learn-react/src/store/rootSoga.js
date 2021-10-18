@@ -13,8 +13,8 @@ function* mock (action) {
   try {
     const state = yield select(state => state.counter1.number)
     console.log('state----', state);
-    // const number = yield call(mockTime);
-    const number = 5
+    const number = yield call(mockTime);
+    // const number = 5
     yield put({ type: actionTypes.multiplication1, playload: { number } });
   } catch (e) {
     yield put({ type: "USER_FETCH_FAILED", message: e.message });
@@ -23,14 +23,13 @@ function* mock (action) {
 
 function* watchSaga () {
   // take是会阻塞的，并且只会执行一次
-  yield take("setTimeChange", mock);
+  // yield take("setTimeChange", mock);
   // yield take("setTimeChange");
-  // yield takeEvery("setTimeChange", mock);
+  yield takeEvery("setTimeChange", mock);
 }
 function* rootSoga () {
-  // yield watchSaga()
-  console.log('xxx');
-  yield take("setTimeChange", mock);
+  yield watchSaga()
+  // yield take("setTimeChange", mock);
   console.log('xxxx');
 }
 

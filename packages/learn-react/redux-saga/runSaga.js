@@ -9,8 +9,16 @@ function runSaga (env, saga, completeCallback) {
     const { dispatch, channel, getState } = env
     const it = typeof saga === 'function' ? saga() : saga
     // 根据是否是saga来进行处理
-    function next (value) {
-        const { done, value: effect } = it.next(value)
+    function next (value, hasError) {
+        let result;
+        if (hasError) {
+            result = it.throw(value);
+        } else if (value === 'CANCEL_TASK') {
+            result = it.return(value);
+        } else {
+            result = it.next(value);
+        }
+        const { done, value: effect } = result
         if (!done) {
             if (typeof effect[Symbol.iterator] === 'function') {
                 runSaga(env, effect);
@@ -20,10 +28,11 @@ function runSaga (env, saga, completeCallback) {
                 switch (effect.type) {
                     case effectTypes.TAKE:
                         // 好像源码里面不是这样实现的来着 take只是暂停
-                        channel.once(effect.actionType, effect.listern ? () => {
-                            runSaga(env, effect.listern.bind(null, effect.actionType))
-                            next()
-                        } : next)
+                        // channel.once(effect.actionType, effect.listern ? () => {
+                        //     runSaga(env, effect.listern.bind(null, effect.actionType))
+                        //     next()
+                        // } : next)
+                        channel.once(effect.actionType, next)
                         break;
                     case effectTypes.PUT:
                         dispatch(effect.action)
@@ -32,6 +41,22 @@ function runSaga (env, saga, completeCallback) {
                     case effectTypes.SELECT:
                         const state = effect.selector(getState())
                         next(state)
+                        break;
+                    case effectTypes.FORK:
+                        const nextSaga = runSaga(env, effect.saga)
+                        next(nextSaga)
+                        break;
+                    case effectTypes.CALL:
+                        effect.fn(...effect.args).then(next)
+                        break;
+                    case effectTypes.CPS:
+                        effect.fn(...effect.args, (err, data) => {
+                            if (err) {
+                                next(err, true);
+                            } else {
+                                next(data);
+                            }
+                        })
                         break;
                     default:
                         next()
