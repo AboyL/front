@@ -4,6 +4,7 @@ export type MockChildren = MockElement | MockElement[]
 export type MockElementProps = {
   style: CSSStyleDeclaration,
   children?: MockChildren,
+  isReactComponent?: boolean,
   [key: string]: any
 }
 
@@ -17,3 +18,5 @@ export type MockElement = {
   content?: string,
   props?: MockElementProps
 }
+
+export type FunctionComponentElement = () => MockElement

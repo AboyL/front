@@ -6,7 +6,7 @@ const getPath = (p) => {
 
 module.exports = {
   mode: 'development',
-  devtool: false,
+  // devtool: false,
   entry: './src/index',
   output: {
     publicPath: "http://localhost:8888/",

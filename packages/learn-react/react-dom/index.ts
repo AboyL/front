@@ -1,4 +1,4 @@
-import { MockElementProps } from './../react/types';
+import { FunctionComponentElement, MockElementProps } from './../react/types';
 
 import { REACT_TEXT } from '../react/constants'
 import { MockElement } from '../react/types'
@@ -33,12 +33,34 @@ export const reconcileChildren = (children: MockElement[], container: HTMLElemen
     mount(child, container)
   }
 }
+
+export const mountFunctionComponent = (vdom: any): any => {
+  let { type, props } = vdom;
+  const renderVdom = type(props)
+  vdom.oldRenderVdom = renderVdom
+  return createDOM(renderVdom)
+}
+
+export const mountClassComponent = (vdom: any): any => {
+  let { type, props } = vdom;
+  let classInstant = new type(props)
+  const renderVdom = classInstant.render()
+  vdom.oldRenderVdom = renderVdom
+  return createDOM(renderVdom)
+}
 export const createDOM = (vdom: MockElement) => {
   // 根据type来进行判断
   let { type, props } = vdom;
   let dom = null
   if (type === REACT_TEXT) {
     dom = document.createTextNode(vdom.content || '')
+    // 处理函数组件
+  } else if (typeof type === 'function') {
+    // 处理类
+    if ((type as any).isReactComponent) {
+      return mountClassComponent(vdom)
+    }
+    return mountFunctionComponent(vdom)
   } else {
     dom = document.createElement(type)
     // 处理props

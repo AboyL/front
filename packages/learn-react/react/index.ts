@@ -1,6 +1,7 @@
 import { REACT_ELEMENT } from './constants'
 import type { MockElementProps, MockElementType, MockChildren, MockElement } from './types';
 import { wrapToVdom } from './util'
+import Component from './componentx'
 
 export const createElement = (
   type: MockElementType,
@@ -33,3 +34,5 @@ export const createElement = (
   }
 }
 
+export { Component }
+export default { Component, createElement }

@@ -79,3 +79,55 @@ const App = /*#__PURE__*/React.createElement("div", {
 }
 
 ```
+
+
+函数
+```jsx
+"use strict";
+
+const FunctionComponent = ({
+  name,
+  children
+}) => {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "app",
+    style: {
+      color: 'red'
+    }
+  }, /*#__PURE__*/React.createElement("div", null, "div1"), name, "+", children, /*#__PURE__*/React.createElement("div", null, "div1"));
+};
+
+const App = /*#__PURE__*/React.createElement(FunctionComponent, {
+  name: "name---"
+}, "children");
+```
+
+
+class 跟函数一致
+```jsx
+"use strict";
+
+class ClassComponent extends Component {
+  componentDidMount() {
+    console.log('xxx');
+  }
+
+  render() {
+    const {
+      name,
+      children
+    } = this.props;
+    return /*#__PURE__*/React.createElement("div", {
+      className: "app",
+      style: {
+        color: 'red'
+      }
+    }, /*#__PURE__*/React.createElement("div", null, "class top"), name, "+", children, /*#__PURE__*/React.createElement("div", null, "class bottom"));
+  }
+
+}
+
+const App = /*#__PURE__*/React.createElement(ClassComponent, {
+  name: "name---"
+}, "xxx");
+```
