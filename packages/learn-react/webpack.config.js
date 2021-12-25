@@ -26,28 +26,33 @@ module.exports = {
     }
   },
   module: {
-    rules: [{
-      test: /\.(jsx|js|ts|tsx)?$/,
-      exclude: /node_modules/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          plugins: [
-            '@babel/plugin-transform-runtime'
-          ],
-          presets: [
-            [
-              "@babel/preset-env",
-            ], "@babel/preset-react"
-          ]
-        }
+    rules: [
+      {
+        test: /\.(jsx|js)?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            plugins: [
+              '@babel/plugin-transform-runtime'
+            ],
+            presets: [
+              [
+                "@babel/preset-env",
+              ], "@babel/preset-react"
+            ]
+          }
 
-      }
-    },
-    {
-      test: /\.css$/,
-      use: ['style-loader', 'css-loader']
-    },
+        }
+      },
+      {
+        test: /\.tsx?$/,
+        loader: "ts-loader"
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
     ]
   },
   plugins: [

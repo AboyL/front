@@ -1,7 +1,12 @@
 import { REACT_ELEMENT } from './constants'
+import type { MockElementProps, MockElementType, MockChildren, MockElement } from './types';
 import { wrapToVdom } from './util'
 
-export const createElement = (type, props, ...children) => {
+export const createElement = (
+  type: MockElementType,
+  props: MockElementProps,
+  ...children: MockElement[]
+): MockElement => {
   let ref, key;
   if (props) {
     ref = props.ref;
@@ -9,12 +14,13 @@ export const createElement = (type, props, ...children) => {
     delete props.ref;
     delete props.key;
   }
-  let child = null
+  let child: any = null
   if (children.length === 1) {
     child = wrapToVdom(children[0])
   } else if (children.length > 1) {
     child = children.map(v => wrapToVdom(v))
   }
+
   return {
     $$typeof: REACT_ELEMENT,
     type,

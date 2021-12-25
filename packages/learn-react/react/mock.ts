@@ -2,11 +2,11 @@ import React from "react";
 
 import * as MockReact from './index'
 
-window.useMockReact = true
+(window as any).useMockReact = true
 
 let Mock = null
 
-if (window.useMockReact) {
+if ((window as any)) {
   Mock = MockReact
 } else {
   Mock = React
