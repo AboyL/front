@@ -3,8 +3,6 @@
 
 import React, { Component } from '../react'
 import * as ReactDom from '../react-dom'
-console.log(React)
-console.log(Component)
 
 // const App = <div className='app' style={{ color: 'red' }} >
 //   <div>div1</div>
@@ -12,18 +10,32 @@ console.log(Component)
 //   <div>div2</div>
 // </div>
 class ClassComponent extends Component {
+  state = {
+    number: 0
+  }
+  constructor(props) {
+    super(props);
+    this.state = { number: 0 };
+  }
+  handleClick = () => {
+    // this.setState({ number: this.state.number + 1 });
+    console.log(this.state);
+    this.setState({ number: this.state.number + 1 })
+  }
   render () {
-    const { name, children } = this.props
+    const { number } = this.state
+    console.log('number', number)
+    const { children } = this.props
+
     return (
       <div className='app' style={{ color: 'red' }} >
-        <div>class top</div>
-        {name}+{children}
-        <div>class bottom</div>
+        <button onClick={this.handleClick}>点我增加 {number}</button>
+        {/* <div>{children}</div> */}
       </div>
     )
   }
 }
-console.log(ClassComponent)
+
 const FunctionComponent = ({ name, children }) => {
   return (
     <div className='app' style={{ color: 'red' }} >
@@ -41,7 +53,6 @@ const App = <ClassComponent name="name---">
   xxx
 </ClassComponent>
 
-console.log(App)
 
 ReactDom.render(
   App,

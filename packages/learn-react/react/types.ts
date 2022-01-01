@@ -16,6 +16,7 @@ export type MockElement = {
   ref: Element,
   key: string,
   content?: string,
+  dom?: HTMLElement | Text,
   props?: MockElementProps
 }
 
