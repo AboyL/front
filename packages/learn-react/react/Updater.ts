@@ -1,3 +1,17 @@
+export let updateQueue = {
+  isBatchingUpdate: false,//更新队列中有一个标识,是否要执行批量更新
+  updaters: new Set<any>(),//updater实例的集合
+  batchUpdate() {
+    for (let updater of updateQueue.updaters) {
+      updater.updateComponent();
+    }
+    //重置 为false
+    updateQueue.isBatchingUpdate = false;
+    //清空updater集合
+    updateQueue.updaters.clear();
+  }
+}
+
 function shouldUpdate(classInstance: any, nextState: any) {
   classInstance.state = nextState;
   classInstance.forceUpdate();
@@ -24,7 +38,12 @@ class Updater {
     this.emitUpdate();
   }
   emitUpdate() {
-    this.updateComponent();
+    // 根据情况进行更新
+    if (updateQueue.isBatchingUpdate) {
+      updateQueue.updaters.add(this)
+    } else {
+      this.updateComponent();
+    }
   }
 
   //返回新状态

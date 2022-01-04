@@ -3,6 +3,7 @@
 
 import React, { Component } from '../react'
 import * as ReactDom from '../react-dom'
+import { updateQueue } from '../react/Updater';
 
 // const App = <div className='app' style={{ color: 'red' }} >
 //   <div>div1</div>
@@ -17,14 +18,38 @@ class ClassComponent extends Component {
     super(props);
     this.state = { number: 0 };
   }
+
+  handleClick2 = () => {
+    updateQueue.isBatchingUpdate = true
+    this.setState((pre) => ({ number: pre.number + 1 }));
+    console.log(this.state.number)// 0
+    this.setState((pre) => ({ number: pre.number + 1 }));
+    console.log(this.state.number)// 0
+    setTimeout(() => {
+      this.setState({ number: this.state.number + 1 });
+      console.log(this.state.number)// 3
+      this.setState({ number: this.state.number + 1 });
+      console.log(this.state.number)// 4
+    });
+    updateQueue.batchUpdate()
+  }
   handleClick = () => {
-    // this.setState({ number: this.state.number + 1 });
-    console.log(this.state);
-    this.setState({ number: this.state.number + 1 })
+    updateQueue.isBatchingUpdate = true
+
+    this.setState({ number: this.state.number + 1 });
+    console.log(this.state.number)// 0
+    this.setState({ number: this.state.number + 1 });
+    console.log(this.state.number)// 0
+    setTimeout(() => {
+      this.setState({ number: this.state.number + 1 });
+      console.log(this.state.number)// 2
+      this.setState({ number: this.state.number + 1 });
+      console.log(this.state.number)// 3
+    });
+    updateQueue.batchUpdate()
   }
   render () {
     const { number } = this.state
-    console.log('number', number)
     const { children } = this.props
 
     return (
