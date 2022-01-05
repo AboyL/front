@@ -20,7 +20,6 @@ class ClassComponent extends Component {
   }
 
   handleClick2 = () => {
-    updateQueue.isBatchingUpdate = true
     this.setState((pre) => ({ number: pre.number + 1 }));
     console.log(this.state.number)// 0
     this.setState((pre) => ({ number: pre.number + 1 }));
@@ -31,11 +30,10 @@ class ClassComponent extends Component {
       this.setState({ number: this.state.number + 1 });
       console.log(this.state.number)// 4
     });
-    updateQueue.batchUpdate()
   }
-  handleClick = () => {
-    updateQueue.isBatchingUpdate = true
-
+  handleClick = (event) => {
+    // 阻止冒泡
+    event.stopPropagation()
     this.setState({ number: this.state.number + 1 });
     console.log(this.state.number)// 0
     this.setState({ number: this.state.number + 1 });
@@ -46,14 +44,17 @@ class ClassComponent extends Component {
       this.setState({ number: this.state.number + 1 });
       console.log(this.state.number)// 3
     });
-    updateQueue.batchUpdate()
+  }
+  handleDivClick = () => {
+    console.log('handleDivClick')
+
   }
   render () {
     const { number } = this.state
     const { children } = this.props
 
     return (
-      <div className='app' style={{ color: 'red' }} >
+      <div onClick={this.handleDivClick} className='app' style={{ color: 'red' }} >
         <button onClick={this.handleClick}>点我增加 {number}</button>
         {/* <div>{children}</div> */}
       </div>

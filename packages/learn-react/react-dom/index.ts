@@ -1,3 +1,4 @@
+import { addEvent } from './event';
 import { MockElementProps } from './../react/types';
 
 import { REACT_TEXT } from '../react/constants'
@@ -18,7 +19,9 @@ export const updateProps = (dom: HTMLElement, oldProps: MockElementProps | null,
     }
     // 事件处理
     if (/^on[A-Z].*/.test(key)) {
-      (dom as any)[key.toLowerCase()] = newProps[key]
+      // 使用合成事件进行处理
+      // (dom as any)[key.toLowerCase()] = newProps[key]
+      addEvent(dom, key.toLowerCase(), newProps[key])
       continue
     }
     (dom as any)[key] = newProps[key]
