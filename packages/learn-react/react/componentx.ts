@@ -4,6 +4,7 @@ import { findDOM, compareTwoVdom } from '../react-dom/utils'
 abstract class Component {
   static isReactComponent = true
   props: any
+  state: any
   updater: Updater
   oldRenderVdom: any
   constructor(props: any) {
@@ -18,6 +19,7 @@ abstract class Component {
   // 应该返回一个vdom
   abstract render(): any
 
+  abstract componentDidUpdate(props: any, state: any): any
   //让类组件强行更新 
   forceUpdate() {
     //获取此组件上一次render渲染出来的虚拟DOM
@@ -29,6 +31,11 @@ abstract class Component {
     //把老的虚拟DOM和新的虚拟DOM进行对比，得对比得到的差异更新到真实DOM
     compareTwoVdom(oldDOM.parentNode, oldRenderVdom, newRenderVdom);
     this.oldRenderVdom = newRenderVdom;
+
+    // 生命周期
+    if (this.componentDidUpdate) {
+      this.componentDidUpdate(this.props, this.state);
+    }
   }
 }
 

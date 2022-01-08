@@ -13,8 +13,21 @@ export let updateQueue = {
 }
 
 function shouldUpdate(classInstance: any, nextState: any) {
+  //默认是要更新的
+  let willUpdate = true;
+  //如果有方法，并且此方法返回了false,那就不更新，如果没有此方法，或者返回了true就要继续向下更新组件
+  if (classInstance.shouldComponentUpdate && !classInstance.shouldComponentUpdate(null, nextState)) {
+    willUpdate = false;
+  }
+  //组件将要更新 
+  if (willUpdate && classInstance.componentWillUpdate) {
+    classInstance.componentWillUpdate();
+  }
+  //不管要不要更新，都要把最新的状态赋给classInstance.state
   classInstance.state = nextState;
-  classInstance.forceUpdate();
+  //如果要更新，才会走组件的更新方法
+  if (willUpdate)
+    classInstance.forceUpdate();
 }
 
 class Updater {

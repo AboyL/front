@@ -56,10 +56,17 @@ export const mountClassComponent = (vdom: any): any => {
   if (ref) {
     ref.current = classInstance
   }
+  if (classInstance.componentWillMount) {
+    classInstance.componentWillMount();
+  }
   const renderVdom = classInstance.render()
   // 进行diff
   vdom.oldRenderVdom = classInstance.oldRenderVdom = renderVdom
-  return createDOM(renderVdom)
+  let dom = createDOM(renderVdom);
+  if (classInstance.componentDidMount) {
+    dom.componentDidMount = classInstance.componentDidMount.bind(this);
+  }
+  return dom;
 }
 
 export const mountForwardComponent = (vdom: any): any => {
@@ -116,6 +123,9 @@ export const createDOM = (vdom: MockElement) => {
 export const mount = (vdom: MockElement, container: HTMLElement) => {
   const newDom = createDOM(vdom)
   container.appendChild(newDom);
+  if (newDom.componentDidMount) {
+    newDom.componentDidMount()
+  }
 }
 
 // 进行渲染

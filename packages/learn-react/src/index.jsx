@@ -1,1 +1,3 @@
-import './ref'
+// import './component'
+// import './ref'
+import './lifeCycle'
