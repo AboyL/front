@@ -1,7 +1,7 @@
 import { addEvent } from './event';
 import { MockElementProps } from './../react/types';
 
-import { REACT_TEXT } from '../react/constants'
+import { REACT_FORWARD_REF_TYPE, REACT_TEXT } from '../react/constants'
 import { MockElement } from '../react/types'
 
 // 更新属性
@@ -51,19 +51,34 @@ export const mountFunctionComponent = (vdom: any): any => {
 }
 
 export const mountClassComponent = (vdom: any): any => {
-  let { type, props } = vdom;
-  let classInstant = new type(props)
-  const renderVdom = classInstant.render()
+  let { type, props, ref } = vdom;
+  let classInstance = new type(props)
+  if (ref) {
+    ref.current = classInstance
+  }
+  const renderVdom = classInstance.render()
   // 进行diff
-  vdom.oldRenderVdom = classInstant.oldRenderVdom = renderVdom
+  vdom.oldRenderVdom = classInstance.oldRenderVdom = renderVdom
+  return createDOM(renderVdom)
+}
+
+export const mountForwardComponent = (vdom: any): any => {
+  let { type, props, ref } = vdom;
+  const renderVdom = type.render(props, ref)
+  vdom.oldRenderVdom = renderVdom
   return createDOM(renderVdom)
 }
 
 export const createDOM = (vdom: MockElement) => {
   // 根据type来进行判断
-  let { type, props } = vdom;
+  let { type, props, ref } = vdom;
   let dom = null
-  if (type === REACT_TEXT) {
+  // 处理ref
+  if (type && type.$$typeof === REACT_FORWARD_REF_TYPE) {
+    // 此时 type.render 就是原来的函数
+    return mountForwardComponent(vdom);//转发组件
+
+  } else if (type === REACT_TEXT) {
     dom = document.createTextNode(`${vdom.content}`)
     // 处理函数组件
   } else if (typeof type === 'function') {
@@ -92,6 +107,9 @@ export const createDOM = (vdom: MockElement) => {
   }
   //让vdom的dom属性指定它创建出来的真实DOM
   vdom.dom = dom;
+  if (ref) {
+    ref.current = dom as HTMLElement
+  }
   return dom
 }
 
